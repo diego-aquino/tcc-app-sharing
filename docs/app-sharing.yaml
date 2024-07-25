@@ -1,0 +1,136 @@
+openapi: 3.1.0
+
+info:
+  title: App de Compartilhamento
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: Compartilhamentos
+
+paths:
+  /shares/files:
+    post:
+      summary: Compartilhar um arquivo
+      operationId: shares/files/create
+      tags:
+        - Compartilhamentos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fileName
+                - fileSize
+              properties:
+                fileName:
+                  type: string
+                  description: O nome do arquivo
+                  example: file.docx
+                fileSize:
+                  type: integer
+                  description: O tamanho do arquivo em bytes
+                  example: 1024
+                mode:
+                  type: string
+                  description: |
+                    O modo de compartilhamento do arquivo:
+                    - public: Qualquer pessoa pode acessar o arquivo;
+                    - private: Apenas o dono do arquivo pode acessá-lo.
+                  enum:
+                    - public
+                    - private
+                  default: public
+                  example: public
+                convertToFileType:
+                  type: string
+                  description: |
+                    O tipo de arquivo para o qual o arquivo deve ser convertido.
+                    Se não for fornecido, o arquivo original será compartilhado.
+      responses:
+        '200':
+          description: Arquivo compartilhado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFile'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '5XX':
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+components:
+  schemas:
+    SharedFile:
+      type: object
+      required:
+        - id
+        - fileName
+        - fileSize
+        - mode
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: O identificador do arquivo compartilhado
+          example: 1
+        fileName:
+          type: string
+          description: O nome do arquivo após a conversão, ou o nome original se não foi convertido
+          example: file.docx
+        fileSize:
+          type: integer
+          description: O tamanho do arquivo em bytes após a conversão, ou o tamanho original se não foi convertido
+          example: 1024
+        mode:
+          type: string
+          description: |
+            O modo de compartilhamento do arquivo:
+            - public: Qualquer pessoa pode acessar o arquivo;
+            - private: Apenas o dono do arquivo pode acessá-lo.
+          enum:
+            - public
+            - private
+          example: public
+        original:
+          type: object
+          description: O arquivo original; presente apenas se o arquivo foi convertido
+          properties:
+            fileName:
+              type: string
+              description: O nome do arquivo original
+              example: file.docx
+            fileSize:
+              type: integer
+              description: O tamanho do arquivo original em bytes
+              example: 1024
+
+    ValidationError:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: A mensagem de erro
+          example: Entrada inválida
+
+    InternalServerError:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: A mensagem de erro
+          example: Erro inesperado
