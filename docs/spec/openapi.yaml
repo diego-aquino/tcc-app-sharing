@@ -23,16 +23,11 @@ paths:
               type: object
               required:
                 - fileName
-                - fileSize
               properties:
                 fileName:
                   type: string
                   description: O nome do arquivo
                   example: file.docx
-                fileSize:
-                  type: integer
-                  description: O tamanho do arquivo em bytes
-                  example: 1024
                 mode:
                   type: string
                   description: |
@@ -76,7 +71,6 @@ components:
       required:
         - id
         - fileName
-        - fileSize
         - mode
       properties:
         id:
@@ -88,10 +82,6 @@ components:
           type: string
           description: O nome do arquivo após a conversão, ou o nome original se não foi convertido
           example: file.docx
-        fileSize:
-          type: integer
-          description: O tamanho do arquivo em bytes após a conversão, ou o tamanho original se não foi convertido
-          example: 1024
         mode:
           type: string
           description: |
@@ -110,10 +100,6 @@ components:
               type: string
               description: O nome do arquivo original
               example: file.docx
-            fileSize:
-              type: integer
-              description: O tamanho do arquivo original em bytes
-              example: 1024
 
     ValidationError:
       type: object
