@@ -22,9 +22,9 @@ paths:
             schema:
               type: object
               required:
-                - fileName
+                - name
               properties:
-                fileName:
+                name:
                   type: string
                   description: O nome do arquivo
                   example: file.docx
@@ -39,7 +39,7 @@ paths:
                     - private
                   default: public
                   example: public
-                convertToFileType:
+                convertTo:
                   type: string
                   description: |
                     O tipo de arquivo para o qual o arquivo deve ser convertido.
@@ -70,7 +70,7 @@ components:
       type: object
       required:
         - id
-        - fileName
+        - name
         - mode
       properties:
         id:
@@ -78,7 +78,7 @@ components:
           format: uuid
           description: O identificador do arquivo compartilhado
           example: 1
-        fileName:
+        name:
           type: string
           description: O nome do arquivo após a conversão, ou o nome original se não foi convertido
           example: file.docx
@@ -92,11 +92,11 @@ components:
             - public
             - private
           example: public
-        original:
+        originalFile:
           type: object
           description: O arquivo original; presente apenas se o arquivo foi convertido
           properties:
-            fileName:
+            name:
               type: string
               description: O nome do arquivo original
               example: file.docx
