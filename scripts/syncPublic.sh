@@ -6,7 +6,8 @@ cd ../api-mocking-app-sharing
 
 cp -r ../tcc-app-sharing .
 rm -rf tcc-app-sharing/.git
-cp -r tcc-app-sharing/* .
+cp -rT tcc-app-sharing .
+
 rm -rf tcc-app-sharing scripts
 
 git add .
