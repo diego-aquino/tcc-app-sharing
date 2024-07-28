@@ -1,4 +1,5 @@
 import fastify from 'fastify';
+import crypto from 'crypto';
 import { z } from 'zod';
 import ConversionClient, { Conversion } from '../clients/conversion';
 import { handleServerError } from './errors';

@@ -1,4 +1,5 @@
 import { httpInterceptor } from 'zimic/interceptor/http';
+import crypto from 'crypto';
 import supertest from 'supertest';
 import {
   afterAll,
