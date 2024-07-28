@@ -13,7 +13,10 @@ import {
 
 import app, { ShareFileQuery } from '../src/server/app';
 import { Conversion } from '../src/clients/ConversionClient';
-import { ConversionSchema } from '../src/types/conversion.generated';
+import {
+  ConversionOperations,
+  ConversionSchema,
+} from '../src/types/conversion.generated';
 
 httpInterceptor.default.onUnhandledRequest({ log: false });
 
@@ -98,10 +101,14 @@ describe('Shares', () => {
     const pendingConversion: Conversion = {
       id: crypto.randomUUID(),
       state: 'PENDING',
-      inputFileName: 'example.docx',
-      inputFileFormat: 'docx',
-      outputFileName: 'example.pdf',
-      outputFileFormat: 'pdf',
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        name: 'example.pdf',
+        format: 'pdf',
+      },
       createdAt: new Date().toISOString(),
       completedAt: null,
     };
@@ -142,7 +149,20 @@ describe('Shares', () => {
       },
     });
 
-    expect(conversionCreationHandler.requests()).toHaveLength(1);
+    const conversionCreationRequests = conversionCreationHandler.requests();
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(conversionCreationRequests[0].body).toEqual<
+      ConversionOperations['conversions/create']['request']['body']
+    >({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
+    });
+
     expect(conversionGetHandler.requests()).toHaveLength(1);
   });
 
@@ -154,10 +174,14 @@ describe('Shares', () => {
     const pendingConversion: Conversion = {
       id: crypto.randomUUID(),
       state: 'PENDING',
-      inputFileName: 'example.docx',
-      inputFileFormat: 'docx',
-      outputFileName: 'example.pdf',
-      outputFileFormat: 'pdf',
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        name: 'example.pdf',
+        format: 'pdf',
+      },
       createdAt: new Date().toISOString(),
       completedAt: null,
     };
@@ -193,7 +217,20 @@ describe('Shares', () => {
       message: 'Error converting file',
     });
 
-    expect(conversionCreationHandler.requests()).toHaveLength(1);
+    const conversionCreationRequests = conversionCreationHandler.requests();
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(conversionCreationRequests[0].body).toEqual<
+      ConversionOperations['conversions/create']['request']['body']
+    >({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
+    });
+
     expect(conversionGetHandler.requests()).toHaveLength(1);
   });
 
@@ -222,6 +259,18 @@ describe('Shares', () => {
       message: 'Internal server error',
     });
 
-    expect(conversionCreationHandler.requests()).toHaveLength(1);
+    const conversionCreationRequests = conversionCreationHandler.requests();
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(conversionCreationRequests[0].body).toEqual<
+      ConversionOperations['conversions/create']['request']['body']
+    >({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
+    });
   });
 });

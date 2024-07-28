@@ -36,26 +36,10 @@ export interface ConversionComponents {
        * @enum {string}
        */
       state: 'PENDING' | 'COMPLETED' | 'ERROR';
-      /**
-       * @description O nome do arquivo
-       * @example file.docx
-       */
-      inputFileName: string;
-      /**
-       * @description O formato original do arquivo
-       * @example docx
-       */
-      inputFileFormat: string;
-      /**
-       * @description O nome do arquivo convertido
-       * @example file.pdf
-       */
-      outputFileName: string;
-      /**
-       * @description O formato do arquivo convertido
-       * @example pdf
-       */
-      outputFileFormat: string;
+      /** @description O arquivo original */
+      inputFile?: ConversionComponents['schemas']['File'];
+      /** @description O arquivo convertido */
+      outputFile?: ConversionComponents['schemas']['File'];
       /**
        * Format: date-time
        * @description A data e hora de criação da conversão
@@ -68,6 +52,18 @@ export interface ConversionComponents {
        * @example 2021-08-01T12:00:00Z
        */
       completedAt: string | null;
+    };
+    File: {
+      /**
+       * @description O nome do arquivo
+       * @example file.docx
+       */
+      name: string;
+      /**
+       * @description O formato do arquivo
+       * @example docx
+       */
+      format: string;
     };
     ValidationError: {
       /**
@@ -129,7 +125,7 @@ export interface ConversionOperations {
            * @description O formato original do arquivo; se não fornecido, será inferido a partir da extensão do nome do arquivo
            * @example docx
            */
-          format?: string;
+          format: string;
         };
         outputFile: {
           /**

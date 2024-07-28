@@ -47,10 +47,10 @@ app.post('/shares/files', async (request, reply) => {
   const sharedFileId = crypto.randomUUID();
 
   const sharedFileName =
-    conversion === undefined ? name : conversion.outputFileName;
+    conversion === undefined ? name : conversion.outputFile.name;
 
   const originalFile =
-    conversion === undefined ? undefined : { name: conversion.inputFileName };
+    conversion === undefined ? undefined : { name: conversion.inputFile.name };
 
   return reply.status(200).send({
     id: sharedFileId,

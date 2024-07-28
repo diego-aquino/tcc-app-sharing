@@ -99,18 +99,29 @@ describe('Shares', () => {
     const pendingConversion: Conversion = {
       id: crypto.randomUUID(),
       state: 'PENDING',
-      inputFileName: 'example.docx',
-      inputFileFormat: 'docx',
-      outputFileName: 'example.pdf',
-      outputFileFormat: 'pdf',
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        name: 'example.pdf',
+        format: 'pdf',
+      },
       createdAt: new Date().toISOString(),
       completedAt: null,
     };
 
+    const conversionCreationRequests: Request[] = [];
+
     interceptorServer.use(
-      http.post(`${process.env.CONVERSION_API_URL}/conversions`, () => {
-        return Response.json(pendingConversion, { status: 202 });
-      }),
+      http.post(
+        `${process.env.CONVERSION_API_URL}/conversions`,
+        ({ request }) => {
+          conversionCreationRequests.push(request);
+
+          return Response.json(pendingConversion, { status: 202 });
+        },
+      ),
     );
 
     interceptorServer.use(
@@ -143,6 +154,17 @@ describe('Shares', () => {
         name: 'example.docx',
       },
     });
+
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(await conversionCreationRequests[0].json()).toEqual({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
+    });
   });
 
   /**
@@ -153,18 +175,29 @@ describe('Shares', () => {
     const pendingConversion: Conversion = {
       id: crypto.randomUUID(),
       state: 'PENDING',
-      inputFileName: 'example.docx',
-      inputFileFormat: 'docx',
-      outputFileName: 'example.pdf',
-      outputFileFormat: 'pdf',
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        name: 'example.pdf',
+        format: 'pdf',
+      },
       createdAt: new Date().toISOString(),
       completedAt: null,
     };
 
+    const conversionCreationRequests: Request[] = [];
+
     interceptorServer.use(
-      http.post(`${process.env.CONVERSION_API_URL}/conversions`, () => {
-        return Response.json(pendingConversion, { status: 202 });
-      }),
+      http.post(
+        `${process.env.CONVERSION_API_URL}/conversions`,
+        ({ request }) => {
+          conversionCreationRequests.push(request);
+
+          return Response.json(pendingConversion, { status: 202 });
+        },
+      ),
     );
 
     interceptorServer.use(
@@ -192,6 +225,17 @@ describe('Shares', () => {
     expect(response.body).toEqual({
       message: 'Error converting file',
     });
+
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(await conversionCreationRequests[0].json()).toEqual({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
+    });
   });
 
   /**
@@ -199,13 +243,20 @@ describe('Shares', () => {
    * utilizar a API de conversão por um erro desconhecido.
    */
   test('case 4', async () => {
+    const conversionCreationRequests: Request[] = [];
+
     interceptorServer.use(
-      http.post(`${process.env.CONVERSION_API_URL}/conversions`, () => {
-        return Response.json(
-          { message: 'Internal server error' },
-          { status: 500 },
-        );
-      }),
+      http.post(
+        `${process.env.CONVERSION_API_URL}/conversions`,
+        ({ request }) => {
+          conversionCreationRequests.push(request);
+
+          return Response.json(
+            { message: 'Internal server error' },
+            { status: 500 },
+          );
+        },
+      ),
     );
 
     const response = await supertest(app.server)
@@ -219,6 +270,17 @@ describe('Shares', () => {
     expect(response.status).toBe(500);
     expect(response.body).toEqual({
       message: 'Internal server error',
+    });
+
+    expect(conversionCreationRequests).toHaveLength(1);
+    expect(await conversionCreationRequests[0].json()).toEqual({
+      inputFile: {
+        name: 'example.docx',
+        format: 'docx',
+      },
+      outputFile: {
+        format: 'pdf',
+      },
     });
   });
 });

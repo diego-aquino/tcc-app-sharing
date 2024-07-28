@@ -1,12 +1,16 @@
+import path from 'path';
 import axios, { AxiosInstance } from 'axios';
+
+interface File {
+  name: string;
+  format: string;
+}
 
 export interface Conversion {
   id: string;
   state: 'PENDING' | 'COMPLETED' | 'ERROR';
-  inputFileName: string;
-  inputFileFormat: string;
-  outputFileName: string;
-  outputFileFormat: string;
+  inputFile: File;
+  outputFile: File;
   createdAt: string;
   completedAt: string | null;
 }
@@ -24,6 +28,7 @@ class ConversionClient {
     const response = await this.api.post<Conversion>('/conversions', {
       inputFile: {
         name: fileName,
+        format: path.extname(fileName).replace(/^\./, ''),
       },
       outputFile: {
         format: outputFormat,
