@@ -42,6 +42,7 @@ paths:
                   description: |
                     O tipo de arquivo para o qual o arquivo deve ser convertido.
                     Se não for fornecido, o arquivo original será compartilhado.
+                  example: pdf
       responses:
         '200':
           description: Arquivo compartilhado
