@@ -9,6 +9,3 @@ rm -rf tcc-app-sharing/.git
 cp -rT tcc-app-sharing .
 
 rm -rf tcc-app-sharing scripts
-
-git add .
-git commit --amend --no-edit
