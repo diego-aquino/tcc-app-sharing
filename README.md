@@ -5,8 +5,9 @@ arquivos. Ela possui uma rota para fazer upload de um arquivo, cujo conteúdo n�
 precisa ser incluído por simplificação. Opcionalmente, o usuário pode solicitar
 que o arquivo seja convertido para outro formato antes de compartilhar. Nesse
 caso, a aplicação envia o arquivo para uma API de conversão e a aguarda através
-de um mecanismo de pooling. Após finalizar o compartilhamento, a aplicação
-retorna uma resposta de sucesso ao usuário.
+de um mecanismo de pooling (requisições periódicas em um curto intervalo de
+tempo). Após finalizar o compartilhamento, a aplicação retorna uma resposta de
+sucesso ao usuário.
 
 ## 1. Acesso
 
