@@ -4,8 +4,10 @@ set -e
 
 cd ../api-mocking-app-sharing
 
-cp -r ../tcc-app-sharing .
-rm -rf tcc-app-sharing/.git
-cp -rT tcc-app-sharing .
-
-rm -rf tcc-app-sharing scripts
+rsync ../tcc-app-sharing/ . \
+  --archive \
+  --verbose \
+  --delete \
+  --exclude .git \
+  --exclude node_modules \
+  --exclude scripts
