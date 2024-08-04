@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import crypto from 'crypto';
 import { z } from 'zod';
-import ConversionClient, { Conversion } from '../clients/conversion';
+import ConversionClient, { Conversion } from '../clients/ConversionClient';
 import { handleServerError } from './errors';
 import { waitForDelay } from '../utils/time';
 
