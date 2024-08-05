@@ -25,7 +25,7 @@ e terminal no centro e um mini-navegador no lado direito.
 ![Projeto aberto no Stackblitz](./docs/images/project-opened-on-stackblitz.png)
 
 No canto superior esquerdo, clique em "Fork" para salvar o projeto no seu perfil
-do Stackblitz. Você precisará fazer login.
+do Stackblitz. Será necessário fazer login.
 
 ![Botão para cópia do projeto no Stackblitz](./docs/images/stackblitz-fork.png)
 
@@ -40,7 +40,7 @@ Arquivos importantes:
 - [`src/server/app.ts`](./src/server/app.ts): arquivo principal da aplicação
   onde o servidor está implementado.
 - [`src/clients/conversion.ts`](./src/clients/conversion.ts): classe que faz as
-  chamadas HTTP para a API de localização.
+  chamadas HTTP para a API de conversão.
 - [`tests/shares.test.ts`](./tests/shares.test.ts): arquivo com os testes do
   compartilhamento.
 
@@ -50,7 +50,7 @@ Comandos úteis:
 - `npm run test`: executa os testes da aplicação.
 - `npm run types:check`: verifica se não há erros de tipagem no código.
 
-A URL da API de localização está declarada no arquivo
+A URL da API de conversão está declarada no arquivo
 [`.env.development`](./.env.development). Ela está disponível em duas versões:
 
 | Versão | URL                                       |
@@ -60,33 +60,25 @@ A URL da API de localização está declarada no arquivo
 
 > [!TIP]
 >
-> Você pode acessar os links acima para ver a documentação de cada versão da
-> API.
+> Acesse os links acima para ver a documentação de cada versão da API.
 
 ## 3. Atividade
 
 ### Parte 1: Criação de testes
 
-Na primeira parte da atividade, você implementará uma suite de testes para esta
+Na primeira parte da atividade, vamos implementar uma suite de testes para esta
 aplicação. Você deve utilizar **uma** das duas ferramentas de mocks de API
 planejadas, [MSW](https://mswjs.io) ou
 [Zimic](https://github.com/zimicjs/zimic), de acordo com a sua alocação para o
-App de Compartilhamento [nesta planilha]().
+App de Compartilhamento [nesta planilha](). @TODO ADICIONAR LINK DA PLANILHA
 
-@TODO ADICIONAR LINK DA PLANILHA
+Você deverá implementar **quatro** casos de teste no arquivo
+[`tests/shares.test.ts`](./tests/shares.test.ts). A escolha de quais aspectos da
+aplicação testar é livre, contanto que:
 
-Os testes devem ser implementados em
-[`tests/shares.test.ts`](./tests/shares.test.ts). Esse arquivo já possui um
-exemplo de teste e stubs dos quatro casos a serem implementados:
-
-1. Deve retornar uma resposta de sucesso quando um arquivo foi compartilhado sem
-   conversão;
-2. Deve retornar uma resposta de sucesso quando um arquivo foi compartilhado com
-   conversão;
-3. Deve retornar uma resposta de erro quando a conversão de um arquivo
-   compartilhado resultou em um erro;
-4. Deve retornar uma resposta de erro quando não foi possível utilizar a API de
-   conversão por um erro desconhecido.
+1. Todos os quatros testes utilizem mocks de API;
+2. Pelo menos um caso de teste valide um fluxo de sucesso;
+3. Pelo menos um caso de teste valide um fluxo de erro.
 
 Para executar os testes, utilize o comando `npm run test`. Ao realizar mudanças
 na aplicação ou nos testes, a suite será executada automaticamente.
@@ -95,8 +87,8 @@ na aplicação ou nos testes, a suite será executada automaticamente.
 
 > [!IMPORTANT]
 >
-> É esperado que a API de localização não seja acessada durante a execução
-> testes, que utilizarão os mocks para simular as respostas da API.
+> Considerando os mocks de API, é esperado que a API de conversão não seja
+> acessada durante a execução testes. Os mocks simularão as respostas da API.
 
 Após implementar os casos descritos acima, salve o link de compartilhamento do
 projeto. Você deverá enviá-lo no formulário de entrega. Confirme que o link está
@@ -104,10 +96,10 @@ com visibilidade pública.
 
 ![Compartilhando o projeto no Stackblitz](./docs/images/stackblitz-sharing.png)
 
-### Parte 2: Adaptações após mudança na API de localização
+### Parte 2: Adaptações após mudança na API de conversão
 
 Nessa segunda parte, vamos migrar o projeto para utilizar a versão 2 da API de
-localização, que possui certas mudanças em relação à versão 1.
+conversão, que possui certas mudanças em relação à versão 1.
 
 Antes de iniciar, crie uma cópia do projeto que você utilizou na parte 1. Para
 isso, clique no botão "Fork" no canto superior. O objetivo é manter o projeto da
@@ -144,8 +136,11 @@ Entre as versões 1 e 2 da API, as seguintes modificações foram realizadas:
     `country`, nas propriedades `outputFile.name` e `outputFile.format`,
     respectivamente.
 
-Agora, você deve adaptar a aplicação, os testes e os mocks de API para lidar com
-essas mudanças.
+Agora, você deve adaptar os testes e os mocks de API para lidar com essas
+mudanças. Para executar a suite, naturalmente é necessário também alterar a
+aplicação para integrar à nova versão da API. Nesta atividade, o refatoramento
+da aplicação não é obrigatório, embora seja recomendado para verificar se os
+testes estão funcionando corretamente.
 
 Após realizar as adaptações, salve o link de compartilhamento do projeto usado
 nesta parte 2. Você também deverá enviá-lo no formulário de entrega ao final da
@@ -157,4 +152,4 @@ Após finalizar as implementações nesta aplicação e no
 [App de Entregas](https://github.com/diego-aquino/api-mocking-app-delivery),
 preencha o formulário de entrega com os links das partes 1 e 2.
 
-@TODO ADICIONAR LINK DO FORMULÁRIO
+https://forms.gle/FP8gzzaBniawu6EV8
