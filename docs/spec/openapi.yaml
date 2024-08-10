@@ -1,7 +1,7 @@
 openapi: 3.1.0
 
 info:
-  title: App de Compartilhamento
+  title: Sistema de Compartilhamento
   version: 1.0.0
 tags:
   - name: Compartilhamentos
@@ -79,7 +79,9 @@ components:
           example: 1
         name:
           type: string
-          description: O nome do arquivo após a conversão, ou o nome original se não foi convertido
+          description:
+            O nome do arquivo após a conversão, ou o nome original se não foi
+            convertido
           example: file.docx
         mode:
           type: string
@@ -93,7 +95,8 @@ components:
           example: public
         originalFile:
           type: object
-          description: O arquivo original; presente apenas se o arquivo foi convertido
+          description:
+            O arquivo original; presente apenas se o arquivo foi convertido
           properties:
             name:
               type: string
