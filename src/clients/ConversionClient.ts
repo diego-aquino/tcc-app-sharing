@@ -27,11 +27,11 @@ class ConversionClient {
   async createConversion(fileName: string, outputFormat: string) {
     const response = await this.api.post<Conversion>('/conversions', {
       inputFile: {
-        name: fileName,
-        format: path.extname(fileName).replace(/^\./, ''),
+        // name: fileName,
+        // format: path.extname(fileName).replace(/^\./, ''),
       },
       outputFile: {
-        format: outputFormat,
+        // format: outputFormat,
       },
     });
 
