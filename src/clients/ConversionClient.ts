@@ -23,10 +23,10 @@ class ConversionClient {
   async createConversion(fileName: string, outputFormat: string) {
     const response = await this.api.post<Conversion>('/conversions', {
       inputFile: {
-        name: fileName,
+        // name: fileName,
       },
       outputFile: {
-        format: outputFormat,
+        // format: outputFormat,
       },
     });
 
